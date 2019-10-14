@@ -1,3 +1,4 @@
+//multiplexor 4 a 1.
 module mux4_1(output reg out, input wire a,b,c,d, input wire [1:0]s);
 
 always @(a, b, c,d,s)
