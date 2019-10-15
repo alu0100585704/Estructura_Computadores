@@ -7,19 +7,18 @@ module alu(output wire [3:0] R,output wire zero, carry,sign,input wire [3:0] A,B
 		assign {x,y,z}={L,ALUOp[1:0]};
 		
 		//dependiendo de los valores de L y ALUOp, pongo a 1 op1_A, que después entrará al mux.
-		// SU EXPRESION BOLEANA es como suma de productos: y'+xz'
-		assign op1_A = (~y) | (x&~z);
+		// SU EXPRESION BOLEANA es como suma de productos: y'+x
+		assign op1_A = (~y) | x;
 
 		//dependiendo de los valores de L y ALUOp, pongo a 1 op1_B, que después entrará al mux.
-		// SU EXPRESION BOLEANA es como suma de productos:  ~y + ~xz + x~z
+		// SU EXPRESION BOLEANA es como suma de productos:  ~y + z + x
 														
 
-		assign op1_B = (~y)|(~x&z)|(x~z);
+		assign op2_B = (~y) | z | x;
 		
 		//dependiendo de los valores de L y ALUOp, pongo a 1 cpl, que después entrará al mux.
-		// SU EXPRESION BOLEANA es como suma de productos: ~xz + ~xy +yz
-
-		assign cpl = (~x&z) | (~x&y) | (y&z);
+		// SU EXPRESION BOLEANA es como suma de productos: ~xz + ~xy 
+		assign cpl = (~x&z) |(~x&y);
 		//dependiendo de los valores de L y ALUOp, pongo a 1 Cin0, que después entrará al mux.
 		// SU EXPRESION BOLEANA es como suma de productos: ~xz + ~xy
 		assign Cin0 = (~x&z) | (~x&y);
@@ -31,7 +30,12 @@ module alu(output wire [3:0] R,output wire zero, carry,sign,input wire [3:0] A,B
 		cal cal0(R[0],Cout0,OP1[0],OP2[0],L,Cin0,ALUOp);
 		
 		cal cal1(R[1],Cout1,OP1[1],OP2[1],L,Cout0,ALUOp);
-		cal cal1(R[2],Cout2,OP1[2],OP2[2],L,Cout1,ALUOp);
-		cal cal1(R[3],carry,OP1[3],OP2[3],L,Cout2,ALUOp);
+		cal cal2(R[2],Cout2,OP1[2],OP2[2],L,Cout1,ALUOp);
+		cal cal3(R[3],carry,OP1[3],OP2[3],L,Cout2,ALUOp);
 		
+		assign sign= R[3]; //signo		
+		
+		//flag de cero
+		assign zero = ~(|R);   //hago OR y como la única forma de que de cero es que todo el valor sea cero, si es así, hago un NOT y pongo a 1 el flag de cero.
+
 endmodule
