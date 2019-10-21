@@ -8,20 +8,32 @@ module alu(output wire [3:0] R,output wire zero, carry,sign,input wire [3:0] A,B
 		
 		//dependiendo de los valores de L y ALUOp, pongo a 1 op1_A, que después entrará al mux.
 		// SU EXPRESION BOLEANA es como suma de productos: y'+x
-		assign op1_A = (~y) | x;
+	//	assign op1_A = (~y) | x;
+		//version con las operaciones aritméticas invertidas.
+
+		//op1_A= y + x
+		assign op1_A = y | x;
 
 		//dependiendo de los valores de L y ALUOp, pongo a 1 op1_B, que después entrará al mux.
 		// SU EXPRESION BOLEANA es como suma de productos:  ~y + z + x
-														
+		//	assign op2_B = (~y) | z | x;
 
-		assign op2_B = (~y) | z | x;
+		//op2_B= z' + y + x
+		assign op2_B = (~z) | y | x;
 		
 		//dependiendo de los valores de L y ALUOp, pongo a 1 cpl, que después entrará al mux.
 		// SU EXPRESION BOLEANA es como suma de productos: ~xz + ~xy 
-		assign cpl = (~x&z) |(~x&y);
-		//dependiendo de los valores de L y ALUOp, pongo a 1 Cin0, que después entrará al mux.
-		// SU EXPRESION BOLEANA es como suma de productos: ~xz + ~xy
-		assign Cin0 = (~x&z) | (~x&y);
+	//	assign cpl = (~x&z) |(~x&y);
+
+		// cpl = ~x~y + ~x~z
+		assign cpl = (~x&~y) | (~x&~z);
+
+ 		//dependiendo de los valores de L y ALUOp, pongo a 1 Cin0, que después entrará al mux.
+		// SU EXPRESION BOLEANA es como suma de productos: ~xz + ~xy		
+	//	assign Cin0 = (~x&z) | (~x&y);
+		
+		//Cin0=~x~y + ~x~z
+		assign Cin0= (~x&~y) | (~x&~z);
 	
 		mux2_4 mux_op1_A(OP1, 4'b0000, A, op1_A);
 		mux2_4 mux_op2_B(OP2_ANTES_COMPLEMENTO1, A, B, op2_B);
