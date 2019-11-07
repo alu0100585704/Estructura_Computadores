@@ -18,8 +18,12 @@ module regfile(input  wire        clk,
   // se leen dos reg combinacionalmente
   // y la escritura del tercero ocurre en flanco de subida del reloj
   always @(posedge clk)
-    if (we3) regb[wa3] <= wd3;	
-  
+    
+    if (we3) 
+		begin
+			regb[wa3] <= wd3;	
+			$display ("Se va a escribir en el registro %d el valor %d. El valor actual es %d",wa3,wd3,regb[wa3]);
+		end
   assign rd1 = (ra1 != 0) ? regb[ra1] : 0;
   assign rd2 = (ra2 != 0) ? regb[ra2] : 0;
 endmodule

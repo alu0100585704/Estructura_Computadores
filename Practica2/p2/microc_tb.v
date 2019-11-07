@@ -30,9 +30,11 @@ end
 
 initial
 begin
+  #(100);
 
-  #(50000*40);  //Esperamos 1010 ciclos o 1010 instrucciones, puesto que el contador puede ser de hasta 256.
+//#(50000*40);  //Esperamos 1010 ciclos o 1010 instrucciones, puesto que el contador puede ser de hasta 256.
   $finish;
 end
 
 endmodule
+
