@@ -15,7 +15,7 @@ begin
 end
 
 // instanciación del procesador
-microc micpu(clk, reset);
+cpu micpu(clk, reset);
 
 initial
 begin

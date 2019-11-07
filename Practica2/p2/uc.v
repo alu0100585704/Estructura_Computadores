@@ -1,4 +1,4 @@
-module uc(input wire reset,input wire [5:0] opcode, input wire z,g_int,input wire [7:0] rd1,input wire [3:0] direccion_puerto, output reg s_inc, output reg  [2:0] s_inm, output reg we3,  wez, output reg [2:0] op_alu,output reg s_puerto,s_puerto_inmediato,output reg s_stack,w_push,w_pop,s_jal,output reg t_int,iret);
+module uc(input wire clk, reset,z,input wire [5:0] opcode, output reg s_abs,s_inc, s_inm,we3,wez, output reg [2:0] op_alu);
 
 
 
@@ -48,8 +48,7 @@ parameter [5:0] in_solo_lectura=6'b0001??;
 parameter [5:0] jmp = 		    6'b000001;
 parameter [5:0] jz =            6'b000010;
 parameter [5:0] jnz =           6'b000011;
-
-reg int_en_curso;
+/*
 
 always @(posedge reset)
   begin
@@ -349,6 +348,6 @@ begin
 
 	endcase
 end
-
+*/
 
 endmodule
