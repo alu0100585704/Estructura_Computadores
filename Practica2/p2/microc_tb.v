@@ -30,9 +30,10 @@ end
 
 initial
 begin
-  #(100);
+  
+  #(20*40); //tiempo para diez instruciones, realmente son once, pero es un margen
 
-//#(50000*40);  //Esperamos 1010 ciclos o 1010 instrucciones, puesto que el contador puede ser de hasta 256.
+
   $finish;
 end
 
